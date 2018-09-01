@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.nagarro.nytimesarticle.R;
 import com.nagarro.nytimesarticle.model.ArticleDataModel;
 import com.nagarro.nytimesarticle.view.activity.ArticleDetailActivity;
@@ -20,6 +22,11 @@ import com.nagarro.nytimesarticle.view.fragment.ArticleDetailFragment;
 
 import java.util.List;
 
+/**
+ * Adapter to show article list in recycler view.
+ * Clicking on article item will take user to article
+ * detail page.
+ */
 public class ArticleListAdapter
         extends RecyclerView.Adapter<ArticleListAdapter.ViewHolder> {
 
@@ -27,13 +34,19 @@ public class ArticleListAdapter
     private final List<ArticleDataModel> mValues;
     private final boolean mTwoPane;
 
+    /**
+     * Recycler item click handler.
+     */
     private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            ArticleDataModel item = (ArticleDataModel) view.getTag();
+            final ArticleDataModel item = (ArticleDataModel) view.getTag();
+            // if this is two pane app, show article
+            // details on second pane, otherwise show
+            // details in second activity.
             if (mTwoPane) {
-                Bundle arguments = new Bundle();
-//                arguments.putString(ArticleDetailFragment.ARG_ITEM_ID, item.id);
+                final Bundle arguments = new Bundle();
+                arguments.putString(ArticleDetailFragment.ARTICLE_URL, item.getArticleUrl());
                 ArticleDetailFragment fragment = new ArticleDetailFragment();
                 fragment.setArguments(arguments);
                 mParentActivity.getSupportFragmentManager().beginTransaction()
@@ -42,13 +55,18 @@ public class ArticleListAdapter
             } else {
                 Context context = view.getContext();
                 Intent intent = new Intent(context, ArticleDetailActivity.class);
-//                intent.putExtra(ArticleDetailFragment.ARG_ITEM_ID, item.id);
-
+                intent.putExtra(ArticleDetailFragment.ARTICLE_URL, item.getArticleUrl());
                 context.startActivity(intent);
             }
         }
     };
 
+    /**
+     * Initialize article list adapter
+     * @param parent parent activity
+     * @param items article items
+     * @param twoPane true if this is two pane app.
+     */
     public ArticleListAdapter(ArticleListActivity parent,
                               List<ArticleDataModel> items,
                               boolean twoPane) {
@@ -78,12 +96,19 @@ public class ArticleListAdapter
         return mValues.size();
     }
 
+    /**
+     * Updates the article list and notify changes
+     * @param articleList article list
+     */
     public void setArticleList(List<ArticleDataModel> articleList) {
         mValues.clear();
         mValues.addAll(articleList);
         notifyDataSetChanged();
     }
 
+    /**
+     * View holder to show article details.
+     */
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private final ImageView mImgNews;
@@ -101,10 +126,19 @@ public class ArticleListAdapter
             mTxtDate = view.findViewById(R.id.txt_date);
         }
 
+        /**
+         * Set specified article details to this view holder
+         *
+         * @param article article details
+         */
         void setArticle(ArticleDataModel article) {
             // load article image
             final String imageUrl = article.getArticleMediaList().get(0).getMediaData().get(0).getImageUrl();
-            Glide.with(mImgNews).load(imageUrl).into(mImgNews);
+            Glide.with(mImgNews)
+                    .setDefaultRequestOptions(new RequestOptions()
+                            .fitCenter()
+                            .transform(new CircleCrop()))
+                    .load(imageUrl).into(mImgNews);
             // show article details
             mTxtHeadline.setText(article.getTitle());
             mTxtDescription.setText(article.getDescription());

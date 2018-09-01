@@ -1,6 +1,5 @@
 package com.nagarro.nytimesarticle.view.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -34,33 +33,20 @@ public class ArticleDetailFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.article_detail, container, false);
 
         final Bundle bundle = getArguments();
         if (bundle != null && bundle.containsKey(ARTICLE_URL)) {
             // get article url
             final String articleUrl = bundle.getString(ARTICLE_URL);
 
-            final Activity activity = this.getActivity();
-            if (activity != null) {
-                final WebView webView = activity.findViewById(R.id.web_view);
-                if(webView != null) {
-                    webView.loadUrl(articleUrl);
-                }
+            final WebView webView = rootView.findViewById(R.id.web_view);
+            if (webView != null) {
+                webView.loadUrl(articleUrl);
             }
         }
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.article_detail, container, false);
-
-//        // Show the dummy content as text in a TextView.
-//        if (mItem != null) {
-//            ((TextView) rootView.findViewById(R.id.article_detail)).setText(mItem.details);
-//        }
 
         return rootView;
     }
