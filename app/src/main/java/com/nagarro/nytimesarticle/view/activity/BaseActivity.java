@@ -1,9 +1,8 @@
 package com.nagarro.nytimesarticle.view.activity;
 
-import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 
-import com.nagarro.nytimesarticle.intf.IBaseView;
+import com.nagarro.nytimesarticle.view.IBaseView;
 
 /**
  * Base activity to be extended by all activities
