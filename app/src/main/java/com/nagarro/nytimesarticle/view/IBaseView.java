@@ -1,4 +1,4 @@
-package com.nagarro.nytimesarticle.intf;
+package com.nagarro.nytimesarticle.view;
 
 /**
  * Base view skeleton
