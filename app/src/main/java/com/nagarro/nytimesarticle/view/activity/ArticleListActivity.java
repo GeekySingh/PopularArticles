@@ -31,7 +31,7 @@ import java.util.List;
  * item details side-by-side using two vertical panes.
  */
 public class ArticleListActivity extends AppCompatActivity
-    implements
+        implements
         IBaseView {
 
     /**
@@ -39,6 +39,7 @@ public class ArticleListActivity extends AppCompatActivity
      * device.
      */
     private boolean mTwoPane;
+    private boolean mShouldExecuteOnResume = true;
 
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
@@ -49,9 +50,10 @@ public class ArticleListActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_list);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
+        toolbar.setLogo(R.mipmap.ic_launcher_round);
 
         if (findViewById(R.id.article_detail_container) != null) {
             // The detail container view will be present only in the
@@ -103,8 +105,11 @@ public class ArticleListActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        // fetch article list
-        mPresenter.getArticleList();
+        if (mShouldExecuteOnResume) {
+            // fetch article list
+            mPresenter.getArticleList();
+            mShouldExecuteOnResume = false;
+        }
     }
 
     @Override
