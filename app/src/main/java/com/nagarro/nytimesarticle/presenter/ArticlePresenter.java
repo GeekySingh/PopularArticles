@@ -4,9 +4,8 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 
-import com.nagarro.nytimesarticle.contract.ArticleContract;
 import com.nagarro.nytimesarticle.dto.ArticleResponseDto;
-import com.nagarro.nytimesarticle.intf.IBaseView;
+import com.nagarro.nytimesarticle.view.IBaseView;
 import com.nagarro.nytimesarticle.model.ArticleDataModel;
 import com.nagarro.nytimesarticle.network.NetworkManager;
 import com.nagarro.nytimesarticle.network.ResponseListener;
@@ -19,29 +18,30 @@ import java.util.List;
  * Article presenter to fetch list of articles from
  * network and send result to ArticleContract.View
  */
-public class ArticlePresenter extends ArticleContract.Presenter {
+public class ArticlePresenter {
 
     private final IBaseView mView;
     private final ArticleService mArticleService;
     private MutableLiveData<List<ArticleDataModel>> mArticleListLiveData;
 
     public ArticlePresenter(Context context, IBaseView view) {
-        super(context, view);
         this.mView = view;
         mArticleService = NetworkManager.getInstance(context).createService(ArticleService.class);
     }
 
-    @Override
+    /**
+     * eturns live data observer to observe for article list changes.
+     * @return observer to observe data changes
+     */
     public LiveData<List<ArticleDataModel>> getArticleListObserver() {
         mArticleListLiveData = new MutableLiveData<>();
-        getArticleList();
         return mArticleListLiveData;
     }
 
     /**
      * Fetches article list from network
      */
-    private void getArticleList() {
+    public void getArticleList() {
         // show progress dialog
         mView.showProgressDialog();
         // fetch article list from network
