@@ -140,6 +140,6 @@ public class ArticleListActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mPresenter.dispose();
+//        mPresenter.dispose();
     }
 }

@@ -25,24 +25,42 @@ public class NetworkManager {
     private static NetworkManager mNetworkHelper;
     private static Retrofit mRetrofit;
 
-    public static NetworkManager getInstance(Context ctx) {
+    /**
+     * Returns single instance of network manager to make network calls.
+     * @param ctx context
+     * @return network manager instance
+     */
+    public static synchronized NetworkManager getInstance(Context ctx) {
         if (mNetworkHelper == null) {
             mNetworkHelper = new NetworkManager(ctx);
         }
         return mNetworkHelper;
     }
 
+    /**
+     * Create and returns retrofit service for network calls.
+     * @param tClass retrofit service class.
+     * @return Retrofit service instance.
+     */
     public <T> T createService(Class<T> tClass) {
         return mRetrofit.create(tClass);
     }
 
+    /**
+     * Private constructor
+     * @param ctx context
+     */
     private NetworkManager(Context ctx) {
         if (mRetrofit == null) {
-            mRetrofit = getRetrofitInstance(ctx);
+            mRetrofit = getRetrofitInstance();
         }
     }
 
-    private static Retrofit getRetrofitInstance(final Context ctx) {
+    /**
+     * Returns instance of retrofit
+     * @return retrofit instance
+     */
+    private static Retrofit getRetrofitInstance() {
         final int CACHE_SIZE = 10 * 1024 * 1024;
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -60,11 +78,4 @@ public class NetworkManager {
                 client(httpClient.build()).
                 build();
     }
-
-//    public static boolean isOnline(Context ctx) {
-//        ConnectivityManager mgr = (ConnectivityManager) ctx.getSystemService(CONNECTIVITY_SERVICE);
-//        if(mgr == null) return false;
-//        final NetworkInfo netInfo = mgr.getActiveNetworkInfo();
-//        return netInfo != null && netInfo.isConnected();
-//    }
 }

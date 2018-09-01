@@ -63,7 +63,7 @@ public class ArticlePresenterTest {
         mView.showProgressDialog();
         mPresenter.getArticleList();
         mView.hideProgressDialog();
-        mView.showError(ErrorType.SERVER_TIMEOUT, "Server response timeout!");
+        mView.showError(ErrorType.SERVER_TIMEOUT, "Network not available!");
     }
 
     @After

@@ -19,7 +19,7 @@ import java.util.List;
  * network and send result to ArticleContract.View
  */
 public class ArticlePresenter
-        implements
+    implements
         Presenter {
 
     private final IBaseView mView;
@@ -27,8 +27,8 @@ public class ArticlePresenter
     private MutableLiveData<List<ArticleDataModel>> mArticleListLiveData;
 
     public ArticlePresenter(Context context, IBaseView view) {
-        this.mView = view;
         mArticleService = NetworkManager.getInstance(context).createService(ArticleService.class);
+        this.mView = view;
     }
 
     /**
