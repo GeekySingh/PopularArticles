@@ -18,7 +18,9 @@ import java.util.List;
  * Article presenter to fetch list of articles from
  * network and send result to ArticleContract.View
  */
-public class ArticlePresenter {
+public class ArticlePresenter
+        implements
+        Presenter {
 
     private final IBaseView mView;
     private final ArticleService mArticleService;
@@ -31,6 +33,7 @@ public class ArticlePresenter {
 
     /**
      * eturns live data observer to observe for article list changes.
+     *
      * @return observer to observe data changes
      */
     public LiveData<List<ArticleDataModel>> getArticleListObserver() {
@@ -64,5 +67,10 @@ public class ArticlePresenter {
                                 mView.showError(errorType, error);
                             }
                         }));
+    }
+
+    @Override
+    public void dispose() {
+        mArticleListLiveData = null;
     }
 }
