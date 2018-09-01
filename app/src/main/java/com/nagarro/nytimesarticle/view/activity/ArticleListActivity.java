@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.nagarro.nytimesarticle.R;
-import com.nagarro.nytimesarticle.intf.IBaseView;
+import com.nagarro.nytimesarticle.view.IBaseView;
 import com.nagarro.nytimesarticle.model.ArticleDataModel;
 import com.nagarro.nytimesarticle.presenter.ArticlePresenter;
 import com.nagarro.nytimesarticle.view.adapter.ArticleListAdapter;
@@ -31,7 +31,7 @@ import java.util.List;
  * item details side-by-side using two vertical panes.
  */
 public class ArticleListActivity extends AppCompatActivity
-        implements
+    implements
         IBaseView {
 
     /**
@@ -69,6 +69,8 @@ public class ArticleListActivity extends AppCompatActivity
 
         // init article presenter
         mPresenter = new ArticlePresenter(this, this);
+        // setup data list observer
+        setupDataObserver();
     }
 
     /**
@@ -82,17 +84,11 @@ public class ArticleListActivity extends AppCompatActivity
                 new ArrayList<ArticleDataModel>(), mTwoPane));
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // fetch article list
-        fetchArticleList();
-    }
-
     /**
-     * Fetches article list from network.
+     * Setup article list data observer
+     * to observe list changes
      */
-    private void fetchArticleList() {
+    private void setupDataObserver() {
         mPresenter.getArticleListObserver()
                 .observe(this, new Observer<List<ArticleDataModel>>() {
                     @Override
@@ -101,6 +97,14 @@ public class ArticleListActivity extends AppCompatActivity
                         adapter.setArticleList(articleList);
                     }
                 });
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // fetch article list
+        mPresenter.getArticleList();
     }
 
     @Override
