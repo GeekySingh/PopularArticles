@@ -95,7 +95,7 @@ tasks.create('analyze').dependsOn('lint')
 // task to build the project, analyze
 tasks.create('automate').dependsOn('build', 'lint', 'testDebugUnitTest', 'createDebugCoverageReport')
 // set dependency of sonarqube task
-tasks.sonarqube.dependsOn('automate')
+//tasks.sonarqube.dependsOn('automate')
 
 def supportLibVersion = "27.1.1"
 def retrofitLibVersion = "2.4.0"
