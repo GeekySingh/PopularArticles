@@ -1,7 +1,8 @@
 # PopularArticles
 Android app built on MVP pattern to show popular article list using NY Times article (public) api.
 
-
+![Screenshot](https://github.com/gaganpreet4423/PopularArticles/blob/master/image/list.png)
+![Screenshot](https://github.com/gaganpreet4423/PopularArticles/blob/master/image/detail.png)
 
 ## Getting Started
 
