@@ -76,6 +76,10 @@ To check the code quality using sonarqube, use below command:
 ```
 Sonarqube command is dependent on automate command. So whenever we execute sonarqube command, it first compiles and generates test case/code coverage reports and using those reports, give a summary of overall code.
 
+Here is a sample sonarqube report of this project:
+
+![Screenshot](https://github.com/gaganpreet4423/PopularArticles/blob/master/image/sonarqube.png)
+
 ## Authors
 
 * **Gaganpreet Singh** - *Initial work* - [Profile](https://github.com/gaganpreet4423)
