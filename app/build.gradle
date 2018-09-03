@@ -1,6 +1,37 @@
+plugins {
+    id "org.sonarqube" version "2.6.1"
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco'
 
+// sonarqube properties
+sonarqube {
+    properties {
+        property "sonar.projectKey", "gaganpreet4423_PopularArticles"
+        property "sonar.organization", "gaganpreet4423-github"
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.login", "4bad7da2295c635cf0c7cc276a41eba1c07266c3"
+        property "sonar.android.lint.report", "build/outputs/lint-results.xml"
+
+        property "sonar.java.coveragePlugin", "jacoco"
+        property "sonar.jacoco.reportPaths", "build/jacoco/testDebugUnitTest.exec"
+        property "sonar.junit.reportsPaths", "build/reports/coverage/debug/report.xml"
+
+        property "sonar.sources", "src/main/java"
+        // Defines where the java files are
+        property "sonar.binaries", "build/intermediates/classes/debug"
+        // Defines where the xml files are
+        property "sonar.java.binaries", "build/intermediates/classes/debug"
+
+        // Analyze tests classes
+        if (project.plugins.hasPlugin('com.android.application')) {
+            property "sonar.tests", "src/test/java, src/androidTest/java"
+        } else {
+            property "sonar.tests", "src/test/java"
+        }
+    }
+}
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -27,27 +58,44 @@ jacoco {
 }
 
 jacoco {
-    toolVersion "0.7.1.201405082137"
+    toolVersion = "0.7.6.201602180812"
 }
 
-task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+// task to generate test and code-coverage report
+task createTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+    group = "Reporting"
 
     reports {
         xml.enabled = true
         html.enabled = true
     }
 
-    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
-    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
-    def mainSrc = "${project.projectDir}/src/main/java/com/nagarro/nytimesarticle/presenter"
+    def fileFilter = ['**/R.class',
+                      '**/R$*.class',
+                      '**/BuildConfig.*',
+                      '**/*$ViewInjector*.*',
+                      '**/*$ViewBinder*.*',
+                      '**/*$MembersInjector*.*',
+                      '**/Manifest*.*',
+                      '**/*Test*.*',
+                      'android/**/*.*']
+    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/dev/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
 
     sourceDirectories = files([mainSrc])
     classDirectories = files([debugTree])
-    executionData = fileTree(dir: "$buildDir", includes: [
-            "jacoco/testDebugUnitTest.exec",
-            "outputs/code-coverage/connected/*coverage.ec"
-    ])
+
+    executionData = files("${project.buildDir}/jacoco/testDevDebugUnitTest.exec")
 }
+
+// task to build the project
+tasks.create('make').dependsOn('build')
+// task to analyze code using lint
+tasks.create('analyze').dependsOn('lint')
+// task to build the project, analyze
+tasks.create('automate').dependsOn('build', 'lint', 'testDebugUnitTest', 'createDebugCoverageReport')
+// set dependency of sonarqube task
+tasks.sonarqube.dependsOn('automate')
 
 def supportLibVersion = "27.1.1"
 def retrofitLibVersion = "2.4.0"
