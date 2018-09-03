@@ -30,12 +30,6 @@ jacoco {
     toolVersion "0.7.1.201405082137"
 }
 
-// Define coverage source.
-// If you have rs/aidl etc... add them here.
-def coverageSourceDirs = [
-        'src/main/java',
-]
-
 task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
 
     reports {
