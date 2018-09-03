@@ -1,6 +1,8 @@
 # PopularArticles
 Android app built on MVP pattern to show popular article list using NY Times article (public) api.
 
+
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -75,4 +77,4 @@ Sonarqube command is dependent on automate command. So whenever we execute sonar
 
 ## Authors
 
-* **Gaganpreet Singh** - *Initial work* - [PurpleBooth](https://github.com/gaganpreet4423)
+* **Gaganpreet Singh** - *Initial work* - [Profile](https://github.com/gaganpreet4423)
