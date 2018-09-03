@@ -73,7 +73,7 @@ public class ArticlePresenterTest {
 
     @After
     public void tearDown() throws Exception {
-        mPresenter.dispose();
-        mPresenter = null;
+//        mPresenter.dispose();
+//        mPresenter = null;
     }
 }
