@@ -1,16 +1,16 @@
 package com.nagarro.nytimesarticle.presenter;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
+import android.os.Looper;
 
 import com.nagarro.nytimesarticle.dto.ArticleResponseDto;
-import com.nagarro.nytimesarticle.view.IBaseView;
 import com.nagarro.nytimesarticle.model.ArticleDataModel;
 import com.nagarro.nytimesarticle.network.NetworkManager;
 import com.nagarro.nytimesarticle.network.ResponseListener;
 import com.nagarro.nytimesarticle.network.RetrofitCallback;
 import com.nagarro.nytimesarticle.service.ArticleService;
+import com.nagarro.nytimesarticle.view.IBaseView;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import java.util.List;
  * network and send result to ArticleContract.View
  */
 public class ArticlePresenter
-    implements
+        implements
         Presenter {
 
     private final IBaseView mView;
@@ -29,6 +29,7 @@ public class ArticlePresenter
     public ArticlePresenter(Context context, IBaseView view) {
         mArticleService = NetworkManager.getInstance(context).createService(ArticleService.class);
         this.mView = view;
+        this.mArticleListLiveData = new MutableLiveData<>();
     }
 
     /**
@@ -36,8 +37,7 @@ public class ArticlePresenter
      *
      * @return observer to observe data changes
      */
-    public LiveData<List<ArticleDataModel>> getArticleListObserver() {
-        mArticleListLiveData = new MutableLiveData<>();
+    public MutableLiveData<List<ArticleDataModel>> getArticleListObserver() {
         return mArticleListLiveData;
     }
 
@@ -49,25 +49,35 @@ public class ArticlePresenter
         mView.showProgressDialog();
         // fetch article list from network
         mArticleService.getArticleList()
-                .enqueue(new RetrofitCallback<>(
-                        new ResponseListener<ArticleResponseDto>() {
-                            @Override
-                            public void onSuccess(ArticleResponseDto responseDto) {
-                                // hide progress dialog
-                                mView.hideProgressDialog();
-                                // send data to observer
-                                mArticleListLiveData.setValue(responseDto.getArticleList());
-                            }
+                .enqueue(new RetrofitCallback<>(mListener));
 
-                            @Override
-                            public void onError(int errorType, String error) {
-                                // hide progress dialog
-                                mView.hideProgressDialog();
-                                // show error message
-                                mView.showError(errorType, error);
-                            }
-                        }));
     }
+
+    public ResponseListener<ArticleResponseDto> getNetworkInterface() {
+        return mListener;
+    }
+
+    private ResponseListener<ArticleResponseDto> mListener = new ResponseListener<ArticleResponseDto>() {
+        @Override
+        public void onSuccess(ArticleResponseDto responseDto) {
+            // hide progress dialog
+            mView.hideProgressDialog();
+            // send data to observer
+            if(Looper.myLooper() == Looper.getMainLooper()) {
+                getArticleListObserver().setValue(responseDto.getArticleList());
+            } else {
+                getArticleListObserver().postValue(responseDto.getArticleList());
+            }
+        }
+
+        @Override
+        public void onError(int errorType, String error) {
+            // hide progress dialog
+            mView.hideProgressDialog();
+            // show error message
+            mView.showError(errorType, error);
+        }
+    };
 
     @Override
     public void dispose() {

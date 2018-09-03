@@ -133,7 +133,8 @@ public class ArticleListAdapter
          */
         void setArticle(ArticleDataModel article) {
             // load article image
-            final String imageUrl = article.getArticleMediaList().get(0).getMediaData().get(0).getImageUrl();
+            final String imageUrl = article.getArticleMediaList().get(0)
+                    .getMediaData().get(0).getImageUrl();
             Glide.with(mImgNews)
                     .setDefaultRequestOptions(new RequestOptions()
                             .fitCenter()

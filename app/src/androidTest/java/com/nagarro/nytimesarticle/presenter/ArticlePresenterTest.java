@@ -1,8 +1,11 @@
 package com.nagarro.nytimesarticle.presenter;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 
-import com.nagarro.nytimesarticle.network.ErrorType;
+import com.nagarro.nytimesarticle.dto.ArticleResponseDto;
+import com.nagarro.nytimesarticle.model.ArticleDataModel;
+import com.nagarro.nytimesarticle.network.ResponseListener;
 import com.nagarro.nytimesarticle.view.IBaseView;
 
 import org.junit.After;
@@ -14,6 +17,12 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.MockitoRule;
+
+import java.util.List;
+
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * UTC for Article presenter
@@ -37,33 +46,29 @@ public class ArticlePresenterTest {
 
     @Test
     public void getArticleList_success() {
-        mView.showProgressDialog();
-        mPresenter.getArticleList();
-        mView.hideProgressDialog();
+        ArticlePresenter presenter = spy(mPresenter);
+
+        when(presenter.getArticleListObserver()).thenReturn(new MutableLiveData<List<ArticleDataModel>>());
+
+        presenter.getArticleList();
+        ResponseListener<ArticleResponseDto> listener = presenter.getNetworkInterface();
+        ArticleResponseDto dto = new ArticleResponseDto();
+        listener.onSuccess(dto);
+
+        verify(mView).hideProgressDialog();
     }
 
     @Test
-    public void getArticleList_failure_no_network() {
-        mView.showProgressDialog();
-        mPresenter.getArticleList();
-        mView.hideProgressDialog();
-        mView.showError(ErrorType.NO_NETWORK, "Network not available!");
-    }
+    public void getArticleList_failure() {
+        ArticlePresenter presenter = spy(mPresenter);
+        presenter.getArticleList();
+        int errorId = -1;
+        String errorMsg = "Something went wrong.";
+        ResponseListener listener = presenter.getNetworkInterface();
+        listener.onError(errorId, errorMsg);
 
-    @Test
-    public void getArticleList_failure_bad_response() {
-        mView.showProgressDialog();
-        mPresenter.getArticleList();
-        mView.hideProgressDialog();
-        mView.showError(ErrorType.BAD_RESPONSE, "Bad network response!");
-    }
-
-    @Test
-    public void getArticleList_failure_server_timeout() {
-        mView.showProgressDialog();
-        mPresenter.getArticleList();
-        mView.hideProgressDialog();
-        mView.showError(ErrorType.SERVER_TIMEOUT, "Network not available!");
+        verify(mView).hideProgressDialog();
+        verify(mView).showError(errorId, errorMsg);
     }
 
     @After

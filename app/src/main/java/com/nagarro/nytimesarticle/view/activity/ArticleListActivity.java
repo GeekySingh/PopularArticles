@@ -136,10 +136,4 @@ public class ArticleListActivity extends AppCompatActivity
                 });
         builder.show();
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        mPresenter.dispose();
-    }
 }
