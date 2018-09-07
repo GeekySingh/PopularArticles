@@ -21,7 +21,7 @@
         android:name="com.nagarro.nytimesarticle.ArticleListFragment"
         android:layout_width="@dimen/item_width"
         android:layout_height="match_parent"
-        tools:context="com.nagarro.nytimesarticle.view.activity.ArticleListActivity"
+        tools:context="com.article.nytimesarticle.view.activity.ArticleListActivity"
         tools:listitem="@layout/article_list_content" />
 
     <FrameLayout

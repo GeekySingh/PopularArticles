@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.nagarro.nytimesarticle">
+    package="com.article.nytimesarticle">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -29,7 +29,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nagarro.nytimesarticle.view.activity.ArticleListActivity" />
+                android:value="com.article.nytimesarticle.view.activity.ArticleListActivity" />
         </activity>
     </application>
 

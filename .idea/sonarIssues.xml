@@ -3,7 +3,112 @@
   <component name="issues">
     <option name="index">
       <map>
+        <entry key="/fragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Flavours/app/src/main/java/com/gapps/flavours/contract/BaseContract.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Flavours/app/src/main/java/com/gapps/flavours/contract/CategoryContract.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Flavours/app/src/main/java/com/gapps/flavours/firebase/FireDB.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Flavours/app/src/main/java/com/gapps/flavours/firebase/FireDBOffline.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Flavours/app/src/main/java/com/gapps/flavours/interfaces/FireDbListener.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Flavours/app/src/main/java/com/gapps/flavours/interfaces/IBaseView.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Flavours/app/src/main/java/com/gapps/flavours/network/RequestType.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Flavours/app/src/main/java/com/gapps/flavours/presenter/BasePresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Flavours/app/src/main/java/com/gapps/flavours/presenter/BasePresenterImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Flavours/app/src/main/java/com/gapps/flavours/presenter/CategoryPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Flavours/app/src/main/java/com/gapps/flavours/presenter/IPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Flavours/app/src/main/java/com/gapps/flavours/view/activity/BaseActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Flavours/app/src/main/java/com/gapps/flavours/view/activity/adpater/CategoryListAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Flavours/app/src/main/java/com/gapps/flavours/view/activity/category/CategoryActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Flavours/app/src/main/res/values/strings.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/androidTest/java/com/article/nytimesarticle/presenter/ArticlePresenterTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/androidTest/java/com/article/nytimesarticle/view/activity/ArticleListActivityTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/article/nytimesarticle/network/NetworkManager.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/article/nytimesarticle/presenter/ArticlePresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/nagarro/nytimesarticle/presenter/ArticlePresenter.java">
           <value>
             <set />
           </value>
