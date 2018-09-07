@@ -16,7 +16,14 @@ Checkout code from below repository
 https://github.com/gaganpreet4423/PopularArticles.git
 ```
 
-## Installing
+## Project MVP Overview
+
+MVP stands for Model-View-Pattern. Both model and views are independent entities and they don't know about each-other. Presenter work as a communicator between these model and view. View can request data from presenter, presenter fetches data (local/network) and then return back data to view to display it.
+
+In this project, ArticlePresenter is data presenter between ArticleListActivity(view) and ArticleDataModel(model). ArticleListActivity requests article data list from ArticlePresenter and after getting data from network, presenter returns list of articles to the caller, i.e. ArticleListActivity.
+
+
+## Build project
 
 To build the project, use make command:
 
