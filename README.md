@@ -89,4 +89,4 @@ Here is a sample sonarqube report of this project:
 
 ## Authors
 
-* **Gaganpreet Singh** - *Initial work* - [Profile](https://github.com/gaganpreet4423)
+* **Gaganpreet Singh** - *Initial work* - [Profile](https://github.com/gagan20)
